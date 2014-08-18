@@ -12,18 +12,12 @@
 		$row = $result->fetch_assoc();
 		
 		// import html dom class
-		include('includes/simple_html_dom.php');
+		include('includes/parse-html/simple_html_dom.php');
 		
 		// Create DOM from URL or file
 		$html = file_get_html($row['ranking-url']);
 		
-		/*
-		// delete old rows 
-		$query = "DELETE FROM parsingrows WHERE site = '".$row['title']."'";
-		$mysqli->query($query);
-		*/
-		
-		include('parsing-files/'.$row['parsing-file']);
+		include('includes/parsing-files/'.$row['parsing-file']);
 		
 		$date = date('d/m/Y H:i');
 		$query = "UPDATE `diplomatiki`.`rankingsites` SET `last-update` = '".$date."' WHERE `id` = ".$_GET['id'];

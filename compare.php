@@ -11,6 +11,7 @@
 	echo '<th>www.topuniversities.com</th>';
 	echo '<th>www.shanghairanking.com</th>';
 	echo '</tr>';
+	
 	// GOING THROUGH THE DATA
 	if($result->num_rows > 0) {
 		$dbpediaURI = '';

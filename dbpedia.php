@@ -3,8 +3,8 @@
 <?php
 	if(isset($_GET['site'])) {
 		// require models
-		require_once('dbpedia-api/BaseAPI.php');
-		require_once('dbpedia-api/DBpediaSpotlight.php');
+		require_once('includes/dbpedia-api/BaseAPI.php');
+		require_once('includes/dbpedia-api/DBpediaSpotlight.php');
 
 		// The maximum execution time, in seconds. If set to zero, no time limit is imposed.
 		set_time_limit(0);
@@ -20,16 +20,6 @@
 				//html decode
 				$university = htmlspecialchars_decode($university);
 				$ranking = $row['ranking'];
-				
-				/*
-				// lookup in dbpedia
-				$dbpedia_url = "http://lookup.dbpedia.org/api/search.asmx/KeywordSearch?QueryClass=organisation&QueryString=".$university;
-				$xml=simplexml_load_file($dbpedia_url);
-				
-				// insert new rows
-				$query = "INSERT INTO parsingrows VALUES (NULL, '".$university."', ".$ranking.", '".$xml->Result->URI."','".$row['title']."')";
-				$mysqli->query($query);
-				*/
 				
 				// init NLP DBpediaSpotlight
 				$api = new DBpediaSpotlight;
