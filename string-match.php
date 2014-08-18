@@ -1,5 +1,8 @@
 <?php include('includes/header.php');?>
 
+<h1>String Match</h1>
+<hr>
+
 <?php
 	if(isset($_GET['site'])) {
 	
@@ -12,7 +15,7 @@
 		echo 'Oliver = Similar Text from World\'s Best Algorithms by Oliver<br />';
 		echo 'Levenshtein = Levenshtein distance between two strings<br /><br />';
 		
-		echo '<table border="1">';
+		echo '<table class="table">';
 		echo '<tr>';
 		echo '<th>University</td>';
 		echo '<th>DBpedia URI</td>';
@@ -71,9 +74,9 @@
 				}
 				
 				if($oliver_best_match == $levenshtein_best_match) {
-					$class_best_match = 'style="background:green;color:white"';
+					$class_best_match = 'class="success"';
 				} else {
-					$class_best_match = 'style="background:red;color:white"';
+					$class_best_match = 'class="danger"';
 				}
 				
 				echo '<td '.$class_best_match.'>'.$oliver_best_match.'</td>';
@@ -94,8 +97,18 @@
 	} else {
 		$query = "SELECT * FROM rankingsites GROUP BY title";
 		$result = $mysqli->query($query) or die($mysqli->error.__LINE__);
-
-		echo '<table border="1">';
+		
+		?>
+		<script>
+		function matchButton(e) {
+			if (!confirm('This action will update the links score (It will overide existing scores)\nThis will take several minutes. Please do not close this window until it is finished.\nAre you sure you want to continue?')) {
+				e.preventDefault();
+			}
+		}
+		</script>
+		<?php
+		
+		echo '<table class="table">';
 		
 		// GOING THROUGH THE DATA
 		if($result->num_rows > 0) {
@@ -114,8 +127,8 @@
 				$row_count = $result_count->fetch_assoc();
 				echo $row_count['all_row'];
 				echo '</td>';
-				echo '<td><a href="string-match.php?site='.$row_rankings['title'].'">Match String</a></td>';
-				echo '<td><a href="string-match-result.php?site='.$row_rankings['title'].'">View string match</a></td>';
+				echo '<td><a href="string-match.php?site='.$row_rankings['title'].'" class="btn btn-danger" role="button" onclick="matchButton(event);">Match String</a></td>';
+				echo '<td><a href="string-match-result.php?site='.$row_rankings['title'].'" class="btn btn-success" role="button">View string match</a></td>';
 				echo '</tr>';
 			}
 		} else {

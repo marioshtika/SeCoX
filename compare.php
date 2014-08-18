@@ -1,20 +1,23 @@
 <?php include('includes/header.php');?>
 
+<h1>Compare</h1>
+<hr>
+
 <?php
 	$query = "SELECT * FROM parsingrows ORDER BY `dbpedia-uri`";
 	$result = $mysqli->query($query) or die($mysqli->error.__LINE__);
 
-	echo '<table border="1">';
+	echo '<table class="table">';
 	echo '<tr>';
-	echo '<th>dbpedia URI</th>';
-	echo '<th>www.timeshighereducation.co.uk</th>';
-	echo '<th>www.topuniversities.com</th>';
-	echo '<th>www.shanghairanking.com</th>';
+	echo '<th>University / DBpedia URI</th>';
+	echo '<th><a href="http://www.timeshighereducation.co.uk/"><img src="http://www.timeshighereducation.co.uk/favicon.ico" width="20" border="0"></a></th>';
+	echo '<th><a href="http://www.topuniversities.com/"><img src="http://www.topuniversities.com/sites/qs.topuni/files/favicon_0.png" width="20" border="0"></a></th>';
+	echo '<th><a href="http://www.shanghairanking.com/"><img src="http://www.shanghairanking.com/image/favicon.ico" width="20" border="0"></a></th>';
 	echo '</tr>';
 	
 	// GOING THROUGH THE DATA
 	if($result->num_rows > 0) {
-		$dbpediaURI = '';
+		$dbpedia_uri = '';
 		$score1 = '-';
 		$score2 = '-';
 		$score3 = '-';
@@ -22,17 +25,19 @@
 		while($row_parsing = $result->fetch_assoc()) {
 			//echo '-'.$row_parsing['dbpedia-uri'].' - '.$row_parsing['ranking'].'<br />';
 			
-			if($dbpediaURI != $row_parsing['dbpedia-uri']) {
-				if(!empty($dbpediaURI)) {
+			if($dbpedia_uri != $row_parsing['dbpedia-uri']) {
+				if(!empty($dbpedia_uri)) {
+					//url decode
+					$dbpedia_uri = urldecode($dbpedia_uri);
 					echo '<tr>';
-					echo '<td>'.$dbpediaURI.'</td>';
+					echo '<td>'.$row_parsing['university'].'<br /><a href="'.$dbpedia_uri.'" target="blank">'.$dbpedia_uri.'</a></td>';
 					echo '<td>'.$score1.'</td>';
 					echo '<td>'.$score2.'</td>';
 					echo '<td>'.$score3.'</td>';
 					echo '</tr>';
 				}
 				
-				$dbpediaURI = $row_parsing['dbpedia-uri'];
+				$dbpedia_uri = $row_parsing['dbpedia-uri'];
 				$score1 = '-';
 				$score2 = '-';
 				$score3 = '-';

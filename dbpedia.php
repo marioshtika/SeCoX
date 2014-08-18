@@ -1,5 +1,8 @@
 <?php include('includes/header.php');?>
 
+<h1>DBpedia</h1>
+<hr>
+
 <?php
 	if(isset($_GET['site'])) {
 		// require models
@@ -44,8 +47,18 @@
 	} else {
 		$query = "SELECT * FROM rankingsites GROUP BY title";
 		$result = $mysqli->query($query) or die($mysqli->error.__LINE__);
-
-		echo '<table border="1">';
+		
+		?>
+		<script>
+		function linkButton(e) {
+			if (!confirm('This action will update the links from dbpedia (It will overide existing links)\nThis will take several minutes. Please do not close this window until it is finished.\nAre you sure you want to continue?')) {
+				e.preventDefault();
+			}
+		}
+		</script>
+		<?php
+		
+		echo '<table class="table">';
 		
 		// GOING THROUGH THE DATA
 		if($result->num_rows > 0) {
@@ -71,8 +84,8 @@
 				$row_count = $result_count->fetch_assoc();
 				echo $row_count['all_row'];
 				echo '</td>';
-				echo '<td><a href="dbpedia.php?site='.$row_rankings['title'].'">Link to Dbpedia</a></td>';
-				echo '<td><a href="dbpedia-result.php?site='.$row_rankings['title'].'">View links to Dbpedia</a></td>';
+				echo '<td><a href="dbpedia.php?site='.$row_rankings['title'].'" class="btn btn-danger" role="button" onclick="linkButton(event);">Link to Dbpedia</a></td>';
+				echo '<td><a href="dbpedia-result.php?site='.$row_rankings['title'].'" class="btn btn-success" role="button">View links to Dbpedia</a></td>';
 				echo '</tr>';
 			}
 		} else {

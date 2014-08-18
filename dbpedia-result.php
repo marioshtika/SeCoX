@@ -1,5 +1,8 @@
 <?php include('includes/header.php');?>
 
+<h1>DBpedia Result</h1>
+<hr>
+
 <?php
 	if(isset($_GET['site'])) {
 	
@@ -9,7 +12,7 @@
 		$query = "SELECT * FROM parsingrows WHERE site = '".$_GET['site']."' ORDER BY university";
 		$result = $mysqli->query($query) or die($mysqli->error.__LINE__);
 	
-		echo '<table border="1">';
+		echo '<table class="table">';
 		
 		// GOING THROUGH THE DATA
 		if($result->num_rows > 0) {
