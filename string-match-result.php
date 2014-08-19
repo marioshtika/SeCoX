@@ -29,7 +29,7 @@
 				$dbpedia_uri = urldecode($row['dbpedia-uri']);
 				
 				// style class for true positive rows
-				if(($row['dbpedia-score'] > 0.203) && ($row['oliver-score'] > 5) && ($row['levenshtein-score'] < 31)) {
+				if(($row['dbpedia-score'] > constant("DBPEDIA_SCORE")) && ($row['oliver-score'] > constant("OLIVER_SCORE")) && ($row['levenshtein-score'] < constant("LEVENSHTEIN_SCORE"))) {
 					$class_row = '';
 				} else {
 					$class_row = 'class="danger"';

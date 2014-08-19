@@ -12,6 +12,9 @@
 		// The maximum execution time, in seconds. If set to zero, no time limit is imposed.
 		set_time_limit(0);
 		
+		// Report all errors except E_NOTICE and E_WARNING
+		error_reporting(E_ALL & ~E_NOTICE & ~E_WARNING);
+
 		$query = "SELECT * FROM parsingrows WHERE site = '".$_GET['site']."'";
 		$result = $mysqli->query($query) or die($mysqli->error.__LINE__);
 		
@@ -73,16 +76,16 @@
 				echo '<tr>';
 				echo '<td>'.$row_rankings['title'].'</td>';
 				echo '<td>';
-				$query_count = "SELECT COUNT(*) as all_row FROM parsingrows WHERE site = '".$row_rankings['title']."'";
-				$result_count = $mysqli->query($query_count) or die($mysqli->error.__LINE__);
-				$row_count = $result_count->fetch_assoc();
-				echo $row_count['all_row'];
+				$query_university_count = "SELECT COUNT(*) as all_university_row FROM parsingrows WHERE site = '".$row_rankings['title']."'";
+				$result_university_count = $mysqli->query($query_university_count) or die($mysqli->error.__LINE__);
+				$row_university_count = $result_university_count->fetch_assoc();
+				echo $row_university_count['all_university_row'];
 				echo '</td>';
 				echo '<td>';
-				$query_count = "SELECT COUNT(*) as all_row FROM parsingrows WHERE site = '".$row_rankings['title']."' AND `dbpedia-uri` <> ''";
-				$result_count = $mysqli->query($query_count) or die($mysqli->error.__LINE__);
-				$row_count = $result_count->fetch_assoc();
-				echo $row_count['all_row'];
+				$query_dbpedia_count = "SELECT COUNT(*) as all_dbpedia_row FROM parsingrows WHERE site = '".$row_rankings['title']."' AND `dbpedia-uri` <> ''";
+				$result_dbpedia_count = $mysqli->query($query_dbpedia_count) or die($mysqli->error.__LINE__);
+				$row_dbpedia_count = $result_dbpedia_count->fetch_assoc();
+				echo $row_dbpedia_count['all_dbpedia_row'];
 				echo '</td>';
 				echo '<td><a href="dbpedia.php?site='.$row_rankings['title'].'" class="btn btn-danger" role="button" onclick="linkButton(event);">Link to Dbpedia</a></td>';
 				echo '<td><a href="dbpedia-result.php?site='.$row_rankings['title'].'" class="btn btn-success" role="button">View links to Dbpedia</a></td>';

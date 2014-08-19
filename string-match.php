@@ -115,18 +115,29 @@
 			echo '<tr>';
 			echo '<th>Sites</th>';
 			echo '<th>Dbpedia Links Count</th>';
+			echo '<th>Wrong matches</th>';
 			echo '<th>Match String</th>';
 			echo '<th>View string match</th>';
 			echo '</tr>';
 			while($row_rankings = $result->fetch_assoc()) {
 				echo '<tr>';
 				echo '<td>'.$row_rankings['title'].'</td>';
+				
 				echo '<td>';
-				$query_count = "SELECT COUNT(*) as all_row FROM parsingrows WHERE site = '".$row_rankings['title']."' AND `dbpedia-uri` <> ''";
-				$result_count = $mysqli->query($query_count) or die($mysqli->error.__LINE__);
-				$row_count = $result_count->fetch_assoc();
-				echo $row_count['all_row'];
+				$query_links_count = "SELECT COUNT(*) as all_links_row FROM parsingrows WHERE site = '".$row_rankings['title']."' AND `dbpedia-uri` <> ''";
+				$result_links_count = $mysqli->query($query_links_count) or die($mysqli->error.__LINE__);
+				$row_links_count = $result_links_count->fetch_assoc();
+				echo $row_links_count['all_links_row'];
 				echo '</td>';
+				
+				echo '<td>';
+				$query_matches_count = "SELECT COUNT(*) as all_matches_row FROM parsingrows WHERE site = '".$row_rankings['title']."' AND `dbpedia-score` > ".constant("DBPEDIA_SCORE")." AND `oliver-score` > ".constant("OLIVER_SCORE")." AND `levenshtein-score` < ".constant("LEVENSHTEIN_SCORE")." AND	`dbpedia-uri` <> ''";
+				$result_matches_count = $mysqli->query($query_matches_count) or die($mysqli->error.__LINE__);
+				$row_matches_count = $result_matches_count->fetch_assoc();
+				echo $row_links_count['all_links_row'] - $row_matches_count['all_matches_row'];
+				echo '</td>';
+				
+				
 				echo '<td><a href="string-match.php?site='.$row_rankings['title'].'" class="btn btn-danger" role="button" onclick="matchButton(event);">Match String</a></td>';
 				echo '<td><a href="string-match-result.php?site='.$row_rankings['title'].'" class="btn btn-success" role="button">View string match</a></td>';
 				echo '</tr>';

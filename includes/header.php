@@ -1,4 +1,5 @@
-<?php include('connect_db.php');?>
+<?php include('includes/config.php');?>
+<?php include('includes/connect_db.php');?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
@@ -48,6 +49,9 @@
 						</li>
 						<li<?php echo ($script_file == 'string-match.php')?' class="active"':'';?>>
 							<a href="string-match.php"><span class="glyphicon glyphicon-transfer"></span> String Match</a>
+						</li>
+						<li<?php echo ($script_file == 'precision-recall.php')?' class="active"':'';?>>
+							<a href="precision-recall.php"><span class="glyphicon glyphicon-screenshot"></span> Precision - Recall</a>
 						</li>
 						<li<?php echo ($script_file == 'compare.php')?' class="active"':'';?>>
 							<a href="compare.php"><span class="glyphicon glyphicon-ok"></span> Compare</a>
