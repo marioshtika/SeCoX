@@ -36,7 +36,7 @@
 					//url decode
 					$dbpedia_uri = urldecode($dbpedia_uri);
 					echo '<tr>';
-					echo '<td>'.$row_parsing['university'].'<br /><a href="'.$dbpedia_uri.'" target="blank">'.$dbpedia_uri.'</a></td>';
+					echo '<td><a href="'.$dbpedia_uri.'" target="blank">'.$dbpedia_uri.'</a></td>';
 					echo '<td>'.$score1.'</td>';
 					echo '<td>'.$score2.'</td>';
 					echo '<td>'.$score3.'</td>';
@@ -62,11 +62,11 @@
 			} else if($row_parsing['site'] == "www.shanghairanking.com") {
 				$score3 = $row_parsing['ranking'];
 			} else if($row_parsing['site'] == "www.leidenranking.com") {
-				$score3 = $row_parsing['ranking'];
+				$score4 = $row_parsing['ranking'];
 			} else if($row_parsing['site'] == "www.urapcenter.org") {
-				$score3 = $row_parsing['ranking'];
+				$score5 = $row_parsing['ranking'];
 			} else if($row_parsing['site'] == "www.webometrics.info") {
-				$score3 = $row_parsing['ranking'];
+				$score6 = $row_parsing['ranking'];
 			}
 		}
 	} else {
