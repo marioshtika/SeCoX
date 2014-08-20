@@ -23,7 +23,7 @@
 		include('includes/parsing-files/'.$row['parsing-file']);
 		
 		$date = date('d/m/Y H:i');
-		$query = "UPDATE `diplomatiki`.`rankingsites` SET `last-update` = '".$date."' WHERE `id` = ".$_GET['id'];
+		$query = "UPDATE rankingsites SET `last-update` = '".$date."' WHERE id = ".$_GET['id'];
 		$result = $mysqli->query($query) or die($mysqli->error.__LINE__);
 		
 		echo "Done";
