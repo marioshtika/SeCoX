@@ -16,9 +16,7 @@
 		echo '<tr>';
 		echo '<th>University</td>';
 		echo '<th>DBpedia URI</td>';
-		echo '<th>DBpedia score</th>';
-		echo '<th>Oliver score</th>';
-		echo '<th>Levenshtein score</th>';
+		echo '<th>Oliver score (>'.$oliver_score[$_GET['site']].'%)</th>';
 		echo '</tr>';
 		
 		
@@ -29,7 +27,7 @@
 				$dbpedia_uri = urldecode($row['dbpedia-uri']);
 				
 				// style class for true positive rows
-				if(($row['dbpedia-score'] > constant("DBPEDIA_SCORE")) && ($row['oliver-score'] > constant("OLIVER_SCORE")) && ($row['levenshtein-score'] < constant("LEVENSHTEIN_SCORE"))) {
+				if($row['oliver-score'] > $oliver_score[$_GET['site']]) {
 					$class_row = '';
 				} else {
 					$class_row = 'class="danger"';
@@ -38,9 +36,7 @@
 				echo '<tr '.$class_row.'>';
 				echo '<td>'.$row['university'].'</td>';
 				echo '<td><a href="'.$dbpedia_uri.'" target="_blank">'.$dbpedia_uri.'</a></td>';
-				echo '<td>'.$row['dbpedia-score'].'</td>';
 				echo '<td>'.$row['oliver-score'].'%</td>';
-				echo '<td>'.$row['levenshtein-score'].'</td>';
 				echo '</tr>';
 			}
 		} else {

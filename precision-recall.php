@@ -24,7 +24,7 @@
 			$row_links_count = $result_links_count->fetch_assoc();
 			$all_answers = $row_links_count['all_links_row'];
 			// correct answers
-			$query_matches_count = "SELECT COUNT(*) as all_matches_row FROM parsingrows WHERE site = '".$row_rankings['title']."' AND `dbpedia-score` > ".constant("DBPEDIA_SCORE")." AND `oliver-score` > ".constant("OLIVER_SCORE")." AND `levenshtein-score` < ".constant("LEVENSHTEIN_SCORE")." AND	`dbpedia-uri` <> ''";
+			$query_matches_count = "SELECT COUNT(*) as all_matches_row FROM parsingrows WHERE site = '".$row_rankings['title']."' AND `oliver-score` > ".$oliver_score[$row_rankings['title']]." AND `dbpedia-uri` <> ''";
 			$result_matches_count = $mysqli->query($query_matches_count) or die($mysqli->error.__LINE__);
 			$row_matches_count = $result_matches_count->fetch_assoc();
 			$correct_answers = $row_matches_count['all_matches_row'];
