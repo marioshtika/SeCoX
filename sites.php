@@ -4,25 +4,21 @@
 <hr>
 
 <?php
-	$query = "SELECT * FROM rankingsites ORDER BY `title` ASC, `url-page` ASC";
+	$query = "SELECT * FROM rankingsites";
 	$result = $mysqli->query($query) or die($mysqli->error.__LINE__);
 
-	echo '<table class="table">';
+	echo '<table class="table table-bordered">';
 	
 	// GOING THROUGH THE DATA
 	if($result->num_rows > 0) {
 		echo '<tr>';
-		echo '<th>Site / Source</th>';
-		echo '<th>Pages</th>';
+		echo '<th>Description</th>';
+		echo '<th>Site</th>';
 		echo '</tr>';
 		while($row_rankings = $result->fetch_assoc()) {
 			echo '<tr>';
-			echo '<td>'.$row_rankings['title'].'<br /><a href="'.$row_rankings['ranking-url'].'" target="_blank">'.$row_rankings['ranking-url'].'</a></td>'; 
-			echo '<td>';
-			if($row_rankings['url-page'] != null) {
-				echo 'page&nbsp;'.$row_rankings['url-page'];
-			}
-			echo '</td>';
+			echo '<td>'.$row_rankings['site-description'].'</td>';
+			echo '<td><a href="'.$row_rankings['site-url'].'" target="_blank">'.$row_rankings['site'].'</a></td>';
 			echo '</tr>';
 		}
 	} else {

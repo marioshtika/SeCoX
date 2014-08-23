@@ -1,4 +1,3 @@
-<?php include('includes/config.php');?>
 <?php include('includes/connect_db.php');?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
@@ -42,19 +41,19 @@
 							<a href="sites.php"><span class="glyphicon glyphicon-globe"></span> Sites</a>
 						</li>
 						<li<?php echo ($script_file == 'parse.php')?' class="active"':'';?>>
-							<a href="parse.php"><span class="glyphicon glyphicon-floppy-save"></span> Parse</a>
+							<a href="parse.php"><span class="glyphicon glyphicon-floppy-save"></span> Extract Entities</a>
 						</li>
 						<li<?php echo ($script_file == 'dbpedia.php')?' class="active"':'';?>>
-							<a href="dbpedia.php"><span class="glyphicon glyphicon-link"></span> Dbpedia</a>
+							<a href="dbpedia.php"><span class="glyphicon glyphicon-link"></span> Entity Link</a>
 						</li>
 						<li<?php echo ($script_file == 'string-match.php')?' class="active"':'';?>>
-							<a href="string-match.php"><span class="glyphicon glyphicon-transfer"></span> String Match</a>
+							<a href="string-match.php"><span class="glyphicon glyphicon-transfer"></span> Check Match</a>
 						</li>
 						<li<?php echo ($script_file == 'precision-recall.php')?' class="active"':'';?>>
 							<a href="precision-recall.php"><span class="glyphicon glyphicon-screenshot"></span> Precision - Recall</a>
 						</li>
 						<li<?php echo ($script_file == 'compare.php')?' class="active"':'';?>>
-							<a href="compare.php"><span class="glyphicon glyphicon-ok"></span> Compare</a>
+							<a href="compare.php"><span class="glyphicon glyphicon-ok"></span> Merged Data</a>
 						</li>
 					</ul>
 				</div>

@@ -1,6 +1,6 @@
 <?php include('includes/header.php');?>
 
-<h1>String Match</h1>
+<h1>Check Match</h1>
 <hr>
 
 <?php
@@ -9,7 +9,7 @@
 		// The maximum execution time, in seconds. If set to zero, no time limit is imposed.
 		set_time_limit(0);
 		
-		$query = "SELECT * FROM parsingrows WHERE site = '".$_GET['site']."' AND `dbpedia-uri` <> '' ORDER BY university";
+		$query = "SELECT * FROM parsingrows WHERE `site-id` = '".$_GET['site']."' AND `dbpedia-uri` <> '' ORDER BY university";
 		$result = $mysqli->query($query) or die($mysqli->error.__LINE__);
 		
 		// GOING THROUGH THE DATA
@@ -17,7 +17,7 @@
 			while($row = $result->fetch_assoc()) {
 				$id = $row['id'];
 				//url decode
-				$dbpedia_uri = urldecode($row['dbpedia-uri']);
+				//$dbpedia_uri = urldecode($row['dbpedia-uri']);
 				
 				//url encode
 				$dbpedia_uri = urlencode($row['dbpedia-uri']);
@@ -26,7 +26,6 @@
 				$json = file_get_contents($url);
 				$obj = json_decode($json);
 				$bindings = $obj->results->bindings;
-				
 				$oliver_best_match = '';
 				$max_oliver_percent = 0;
 				
@@ -48,62 +47,65 @@
 			echo 'NO RESULTS'; 
 		}
 		
-		echo "Done";
+		echo '<div class="alert alert-success text-center" role="alert"><b>Well done!</b> You successfully checked your matches. </div>';
 
-	} else {
-		$query = "SELECT * FROM rankingsites GROUP BY title";
-		$result = $mysqli->query($query) or die($mysqli->error.__LINE__);
-		
-		?>
-		<script>
-		function matchButton(e) {
-			if (!confirm('This action will update the links score (It will overide existing scores)\nThis will take several minutes. Please do not close this window until it is finished.\nAre you sure you want to continue?')) {
-				e.preventDefault();
-			}
-		}
-		</script>
-		<?php
-		
-		echo '<table class="table">';
-		
-		// GOING THROUGH THE DATA
-		if($result->num_rows > 0) {
-			echo '<tr>';
-			echo '<th>Sites</th>';
-			echo '<th>Dbpedia Links Count</th>';
-			echo '<th>Wrong matches</th>';
-			echo '<th>Match String</th>';
-			echo '<th>View string match</th>';
-			echo '</tr>';
-			while($row_rankings = $result->fetch_assoc()) {
-				echo '<tr>';
-				echo '<td>'.$row_rankings['title'].'</td>';
-				
-				echo '<td>';
-				$query_links_count = "SELECT COUNT(*) as all_links_row FROM parsingrows WHERE site = '".$row_rankings['title']."' AND `dbpedia-uri` <> ''";
-				$result_links_count = $mysqli->query($query_links_count) or die($mysqli->error.__LINE__);
-				$row_links_count = $result_links_count->fetch_assoc();
-				echo $row_links_count['all_links_row'];
-				echo '</td>';
-				
-				echo '<td>';
-				$query_matches_count = "SELECT COUNT(*) as all_matches_row FROM parsingrows WHERE site = '".$row_rankings['title']."' AND `oliver-score` > ".$oliver_score[$row_rankings['title']]." AND `dbpedia-uri` <> ''";
-				$result_matches_count = $mysqli->query($query_matches_count) or die($mysqli->error.__LINE__);
-				$row_matches_count = $result_matches_count->fetch_assoc();
-				echo $row_links_count['all_links_row'] - $row_matches_count['all_matches_row'];
-				echo '</td>';
-				
-				
-				echo '<td><a href="string-match.php?site='.$row_rankings['title'].'" class="btn btn-danger" role="button" onclick="matchButton(event);">Match String</a></td>';
-				echo '<td><a href="string-match-result.php?site='.$row_rankings['title'].'" class="btn btn-success" role="button">View string match</a></td>';
-				echo '</tr>';
-			}
-		} else {
-			echo 'NO RESULTS'; 
-		}
-		
-		echo '</table>';
 	}
+
+	$query = "SELECT * FROM rankingsites";
+	$result = $mysqli->query($query) or die($mysqli->error.__LINE__);
+	
+	?>
+	<script>
+	function matchButton(e) {
+		if (!confirm('This action will update the links score (It will overide existing scores)\nThis will take several minutes. Please do not close this window until it is finished.\nAre you sure you want to continue?')) {
+			e.preventDefault();
+		}
+	}
+	</script>
+	<?php
+	
+	echo '<table class="table table-bordered">';
+	
+	// GOING THROUGH THE DATA
+	if($result->num_rows > 0) {
+		echo '<tr>';
+		echo '<th>Site</th>';
+		echo '<th class="text-center">Linked Entities</th>';
+		echo '<th class="text-center">Wrong matches</th>';
+		echo '<th></th>';
+		echo '</tr>';
+		while($row_rankings = $result->fetch_assoc()) {
+			echo '<tr>';
+			
+			echo '<td>'.$row_rankings['site'].'</td>';
+			
+			echo '<td class="text-center">';
+			$query_links_count = "SELECT COUNT(*) as all_links_row FROM parsingrows WHERE `site-id` = '".$row_rankings['id']."' AND `dbpedia-uri` <> ''";
+			$result_links_count = $mysqli->query($query_links_count) or die($mysqli->error.__LINE__);
+			$row_links_count = $result_links_count->fetch_assoc();
+			echo $row_links_count['all_links_row'];
+			echo '</td>';
+			
+			echo '<td class="text-center">';
+			$query_matches_count = "SELECT COUNT(*) as all_matches_row FROM parsingrows WHERE `site-id` = '".$row_rankings['id']."' AND `oliver-score` > ".$row_rankings['best-oliver-score']." AND `dbpedia-uri` <> ''";
+			$result_matches_count = $mysqli->query($query_matches_count) or die($mysqli->error.__LINE__);
+			$row_matches_count = $result_matches_count->fetch_assoc();
+			echo $row_links_count['all_links_row'] - $row_matches_count['all_matches_row'];
+			echo '</td>';
+			
+			echo '<td class="text-center">';
+			echo '<a href="string-match.php?site='.$row_rankings['id'].'" class="btn btn-danger" role="button" onclick="matchButton(event);"><span class="glyphicon glyphicon-transfer"></span> Match</a> ';
+			echo '<a href="string-match-result.php?site='.$row_rankings['id'].'" class="btn btn-success" role="button"><span class="glyphicon glyphicon-list-alt"></span> View</a>';
+			echo '</td>';
+			
+			echo '</tr>';
+		}
+	} else {
+		echo 'NO RESULTS'; 
+	}
+	
+	echo '</table>';
+
 ?>
 
 <?php include('includes/footer.php');?>
