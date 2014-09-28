@@ -1,11 +1,15 @@
 <?php include('includes/header.php');?>
 
-<h1>Entity Link Result</h1>
-<hr>
-
 <?php
 	if(isset($_GET['site'])) {
-	
+
+		$query_rankings = "SELECT * FROM rankingsites WHERE id = ".$_GET['site'];
+		$result_rankings = $mysqli->query($query_rankings) or die($mysqli->error.__LINE__);
+		$row_rankings = $result_rankings->fetch_assoc();
+
+		echo "<h1>Entity Link Result (".$row_rankings['site'].")</h1>";
+		echo "<hr />";
+		
 		// The maximum execution time, in seconds. If set to zero, no time limit is imposed.
 		set_time_limit(0);
 		
