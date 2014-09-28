@@ -40,7 +40,7 @@
 					}
 				}
 				
-				$query_update = "UPDATE parsingrows SET `oliver-score` = '".$max_oliver_percent."' WHERE id = ".$id;
+				$query_update = "UPDATE parsingrows SET `oliver-score` = '".$max_oliver_percent."', `oliver-best-match` = '".$oliver_best_match."' WHERE id = ".$id;
 				$result_update = $mysqli->query($query_update) or die($mysqli->error.__LINE__);
 			}
 		} else {
