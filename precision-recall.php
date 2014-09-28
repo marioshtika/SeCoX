@@ -82,7 +82,11 @@
 	echo '<b>Average Recall: </b>';
 	$average_recall = ($sum_correct_answers + $sum_not_found_answers != 0) ? $sum_correct_answers / ($sum_correct_answers + $sum_not_found_answers) : 0;
 	echo $sum_correct_answers.' / '.($sum_correct_answers + $sum_not_found_answers).' = '.number_format((float)$average_recall, 4, '.', '');;
+	echo '<br />';
 	
+	echo '<b>Average F-measure: </b>';
+	$average_fmeasure = ($average_precision + $average_recall != 0) ? 2 * ($average_precision * $average_recall) / ($average_precision + $average_recall) : 0;
+	echo number_format((float)$average_fmeasure, 4, '.', '');
 ?>
 
 <?php include('includes/footer.php');?>
