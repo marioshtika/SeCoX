@@ -11,19 +11,19 @@
 	echo '<table class="table table-bordered">';
 	echo '<tr>';
 	echo '<th>University / DBpedia URI</th>';
-	echo '<th class="text-center"><a href="http://www.timeshighereducation.co.uk/"><img src="http://www.timeshighereducation.co.uk/favicon.ico" width="20" border="0"></a></th>';
-	echo '<th class="text-center"><a href="http://www.topuniversities.com/"><img src="http://www.topuniversities.com/sites/qs.topuni/files/favicon_0.png" width="20" border="0"></a></th>';
-	echo '<th class="text-center"><a href="http://www.shanghairanking.com/"><img src="http://www.shanghairanking.com/image/favicon.ico" width="20" border="0"></a></th>';
-	echo '<th class="text-center"><a href="http://www.leidenranking.com/"><img src="http://www.leidenranking.com/favicon.ico" width="20" border="0"></a></th>';
-	echo '<th class="text-center"><a href="http://www.urapcenter.org/"><img src="http://www.urapcenter.org/2013/favicon.ico" width="20" border="0"></a></th>';
-	echo '<th class="text-center"><a href="http://www.shanghairanking.com/"><img src="http://www.webometrics.info/sites/default/files/logo2_0.png" width="20" border="0"></a></th>';
+	echo '<th class="text-center"><a href="http://www.timeshighereducation.co.uk/" target="_blank"><img src="http://www.timeshighereducation.co.uk/favicon.ico" width="20" border="0"></a></th>';
+	echo '<th class="text-center"><a href="http://www.topuniversities.com/" target="_blank"><img src="http://www.topuniversities.com/sites/qs.topuni/files/favicon_0.png" width="20" border="0"></a></th>';
+	echo '<th class="text-center"><a href="http://www.shanghairanking.com/" target="_blank"><img src="http://www.shanghairanking.com/image/favicon.ico" width="20" border="0"></a></th>';
+	echo '<th class="text-center"><a href="http://www.leidenranking.com/" target="_blank"><img src="http://www.leidenranking.com/favicon.ico" width="20" border="0"></a></th>';
+	echo '<th class="text-center"><a href="http://www.urapcenter.org/" target="_blank"><img src="http://www.urapcenter.org/2013/favicon.ico" width="20" border="0"></a></th>';
+	echo '<th class="text-center"><a href="http://www.webometrics.info/" target="_blank"><img src="http://www.webometrics.info/sites/default/files/logo2_0.png" width="20" border="0"></a></th>';
 	echo '</tr>';
 	
 	// GOING THROUGH THE DATA
 	if($result->num_rows > 0) {
 	
 		$data = array();
-		$data[] = array("University", "DBpedia URI", "timeshighereducation", "topuniversities", "shanghairanking", "leidenranking", "urapcenter", "shanghairanking");
+		$data[] = array("University", "DBpedia URI", "timeshighereducation", "topuniversities", "shanghairanking", "leidenranking", "urapcenter", "webometrics");
 		$dbpedia_uri = '';
 		$score1 = '';
 		$score2 = '';
